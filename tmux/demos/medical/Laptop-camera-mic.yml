@@ -1,0 +1,24 @@
+session_name: Laptop-camera-mic
+
+on_project_start: |
+  export ROS_NAMESPACE=${ROS_NAMESPACE:-/kitware}
+  export HL2_IP=${HL2_IP:-192.168.4.70}
+  export CONFIG_DIR=${ANGEL_WORKSPACE_DIR}/config
+  export NODE_CONFIG_DIR=${ANGEL_WORKSPACE_DIR}/src/angel_system_nodes/configs
+  export MODEL_DIR=${ANGEL_WORKSPACE_DIR}/model_files
+
+  # Changing the domain ID was important at KHQ to unblock perceived network
+  # congestion slowdowns to message sending.
+  export ROS_DOMAIN_ID=77
+
+  # Set the frame-rate to be used by multiple sources. This should be in frames
+  # per second (Hz).
+  export FRAME_RATE=15
+
+windows:
+  - macbook_camera:
+    layout: even-vertical
+    panes:
+      - camera_capture: ros2 run angel_system_nodes laptop_debugging --ros-args
+          -r __ns:=${ROS_NAMESPACE}
+          
